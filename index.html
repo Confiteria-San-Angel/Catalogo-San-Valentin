@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo San Valentín 2026 - Confitería San Ángel</title>
+    <style>
+        :root { --primario: #ff4d6d; --secundario: #ff758f; --fondo: #fff0f3; --texto: #4a0e0e; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--fondo); color: var(--texto); margin: 0; padding: 0; }
+        .container { max-width: 800px; margin: auto; padding: 20px; padding-bottom: 120px; }
+        header { text-align: center; background: var(--primario); color: white; padding: 30px 10px; border-radius: 0 0 30px 30px; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .categoria-label { background: var(--texto); color: white; padding: 5px 15px; border-radius: 20px; display: inline-block; margin-top: 20px; font-size: 0.9em; }
+        .producto { background: white; padding: 15px; border-radius: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: 0.3s; }
+        .producto:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .info h3 { margin: 0; font-size: 1.1em; }
+        .info p { margin: 5px 0 0; color: #888; font-size: 0.9em; }
+        .precio { color: var(--primario); font-weight: bold; font-size: 1.1em; }
+        .controles { display: flex; align-items: center; gap: 10px; }
+        button.add { background: var(--primario); border: none; color: white; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; font-size: 1.2em; }
+        
+        /* Carrito flotante */
+        .footer-cart { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 20px; border-top: 2px solid var(--primario); box-shadow: 0 -5px 20px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+        .total-info h2 { margin: 0; color: var(--primario); }
+        .total-info p { margin: 0; font-size: 0.9em; }
+        .btn-whatsapp { background: #25d366; color: white; padding: 12px 25px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 1.1em; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3); }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Confitería San Ángel</h1>
+    <p>❤️ Catálogo Interactivo San Valentín 2026 ❤️</p>
+</header>
+
+<div class="container" id="lista-productos">
+    </div>
+
+<div class="footer-cart">
+    <div class="total-info">
+        <p>Total del pedido:</p>
+        <h2 id="total-precio">$0.00</h2>
+    </div>
+    <a href="#" class="btn-whatsapp" onclick="enviarPedido(event)">Enviar a WhatsApp</a>
+</div>
+
+<script>
+    const productos = [
+        // ROLLITOS
+        [span_2](start_span){ n: "Rollito Rojo", p: 80, c: "Rollitos" }, //[span_2](end_span)
+        [span_3](start_span){ n: "Rollito Blanco Rojo", p: 80, c: "Rollitos" }, //[span_3](end_span)
+        [span_4](start_span){ n: "Rollito San Valentín", p: 85, c: "Rollitos" }, //[span_4](end_span)
+        [span_5](start_span){ n: "Rollito Mix", p: 80, c: "Rollitos" }, //[span_5](end_span)
+        // CORAZONES AZUCARADOS
+        [span_6](start_span){ n: "Corazón Tricolor", p: 80, c: "Corazones" }, //[span_6](end_span)
+        [span_7](start_span){ n: "Gran Corazón Rojo", p: 80, c: "Corazones" }, //[span_7](end_span)
+        [span_8](start_span){ n: "Corazón Bicolor", p: 80, c: "Corazones" }, //[span_8](end_span)
+        [span_9](start_span){ n: "Corazón Rojo (Mediano)", p: 80, c: "Corazones" }, //[span_9](end_span)
+        [span_10](start_span){ n: "Corazón Corazón", p: 80, c: "Corazones" }, //[span_10](end_span)
+        [span_11](start_span){ n: "Corazón Romántico", p: 80, c: "Corazones" }, //[span_11](end_span)
+        [span_12](start_span){ n: "Corazón Mini", p: 80, c: "Corazones" }, //[span_12](end_span)
+        [span_13](start_span){ n: "Corazón Amor (LOVE)", p: 80, c: "Corazones" }, //[span_13](end_span)
+        [span_14](start_span){ n: "Corazón Triple", p: 80, c: "Corazones" }, //[span_14](end_span)
+        [span_15](start_span){ n: "Cuadro Corazón", p: 80, c: "Corazones" }, //[span_15](end_span)
+        [span_16](start_span){ n: "Corazón Meloso", p: 85, c: "Corazones" }, //[span_16](end_span)
+        [span_17](start_span){ n: "Corazón Cereza", p: 80, c: "Corazones" }, //[span_17](end_span)
+        // BRILLANTES
+        [span_18](start_span){ n: "Mini Mix San Valentín", p: 85, c: "Brillantes" }, //[span_18](end_span)
+        [span_19](start_span){ n: "Corazón Diamante", p: 90, c: "Brillantes" }, //[span_19](end_span)
+        [span_20](start_span){ n: "Gran Corazón Brillante", p: 85, c: "Brillantes" }, //[span_20](end_span)
+        [span_21](start_span){ n: "Mini Corazón Brillante", p: 85, c: "Brillantes" }, //[span_21](end_span)
+        // FLORES Y MÁS
+        [span_22](start_span){ n: "Hello Kitty", p: 80, c: "Flores y más" }, //[span_22](end_span)
+        [span_23](start_span){ n: "Cupido", p: 80, c: "Flores y más" }, //[span_23](end_span)
+        [span_24](start_span){ n: "Beso Rojo", p: 80, c: "Flores y más" }, //[span_24](end_span)
+        [span_25](start_span){ n: "Rosa Roja", p: 80, c: "Flores y más" }, //[span_25](end_span)
+        [span_26](start_span){ n: "Flor Cristal", p: 80, c: "Flores y más" }, //[span_26](end_span)
+        [span_27](start_span){ n: "Flor Mediana", p: 80, c: "Flores y más" }, //[span_27](end_span)
+        [span_28](start_span){ n: "Hojita Verde", p: 80, c: "Flores y más" }, //[span_28](end_span)
+        [span_29](start_span){ n: "Gotas de Amor", p: 85, c: "Flores y más" }, //[span_29](end_span)
+        [span_30](start_span){ n: "Cuadrito Tri", p: 80, c: "Flores y más" }, //[span_30](end_span)
+        [span_31](start_span){ n: "Amor Infinito", p: 80, c: "Flores y más" }, //[span_31](end_span)
+        [span_32](start_span){ n: "Serpentina", p: 85, c: "Flores y más" }, //[span_32](end_span)
+        // MIXES Y GIGANTES
+        [span_33](start_span){ n: "Rosa Roja Gigante", p: 90, c: "Mix" }, //[span_33](end_span)
+        [span_34](start_span){ n: "Hoja Verde Gigante", p: 90, c: "Mix" }, //[span_34](end_span)
+        [span_35](start_span){ n: "Mix San Valentín", p: 85, c: "Mix" }, //[span_35](end_span)
+        // OSITOS
+        [span_36](start_span){ n: "Osito 3D", p: 100, c: "Ositos" }, //[span_36](end_span)
+        [span_37](start_span){ n: "Pandita", p: 100, c: "Ositos" }, //[span_37](end_span)
+        // PICOSOS
+        [span_38](start_span){ n: "Corazón Fresa Tajín", p: 85, c: "Picosos" }, //[span_38](end_span)
+        [span_39](start_span){ n: "Rencorosa (Mango)", p: 85, c: "Picosos" }, //[span_39](end_span)
+        [span_40](start_span){ n: "Corazón Sandía", p: 85, c: "Picosos" }, //[span_40](end_span)
+        [span_41](start_span){ n: "Sandía Enchilada", p: 85, c: "Picosos" }, //[span_41](end_span)
+        // EXÓTICAS
+        [span_42](start_span){ n: "Gomita Man 1 o 2", p: 100, c: "Exóticas" }, //[span_42](end_span)
+        [span_43](start_span){ n: "Gomita Woman 1 o 2", p: 100, c: "Exóticas" } //[span_43](end_span)
+    ];
+
+    let pedido = {};
+
+    function render() {
+        const container = document.getElementById('lista-productos');
+        let currentCat = "";
+        let html = "";
+
+        productos.forEach(prod => {
+            if (currentCat !== prod.c) {
+                currentCat = prod.c;
+                html += `<div class="categoria-label">${currentCat}</div>`;
+            }
+            html += `
+                <div class="producto">
+                    <div class="info">
+                        <h3>${prod.n}</h3>
+                        <p>$${prod.p}.00 / kilo</p>
+                    </div>
+                    <div class="controles">
+                        <span class="precio">$${pedido[prod.n] ? pedido[prod.n] * prod.p : 0}</span>
+                        <button class="add" onclick="cambiarCant('${prod.n}', 1)">+</button>
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+        actualizarTotal();
+    }
+
+    function cambiarCant(nombre, cambio) {
+        if (!pedido[nombre]) pedido[nombre] = 0;
+        pedido[nombre] += cambio;
+        if (pedido[nombre] <= 0) delete pedido[nombre];
+        render();
+    }
+
+    function actualizarTotal() {
+        let total = 0;
+        productos.forEach(p => {
+            if (pedido[p.n]) total += pedido[p.n] * p.p;
+        });
+        document.getElementById('total-precio').innerText = `$${total}.00`;
+    }
+
+    function enviarPedido(e) {
+        e.preventDefault();
+        let total = 0;
+        let texto = "¡Hola Alonso! Quisiera realizar un pedido de Confitería San Ángel para San Valentín:\n\n";
+        
+        for (let item in pedido) {
+            let p = productos.find(x => x.n === item);
+            let subtotal = pedido[item] * p.p;
+            texto += `✅ ${pedido[item]}kg de ${item} ($${subtotal})\n`;
+            total += subtotal;
+        }
+
+        if (total === 0) return alert("Por favor, agrega productos a tu carrito.");
+        
+        texto += `\n💰 *TOTAL DEL PEDIDO: $${total}.00*`;
+        texto += `\n\n¿Podrían confirmarme la disponibilidad para realizar la transferencia del anticipo?`;
+
+        window.open(`https://wa.me/525544865766?text=${encodeURIComponent(texto)}`, '_blank');
+    }
+
+    render();
+</script>
+
+</body>
+</html>
